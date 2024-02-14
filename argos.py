@@ -1,23 +1,38 @@
 import paramiko
+import psutil
+import socket
 
-def fetch_metrics(hostname, port, username, password):
+
+def connect_to_server(hostname, port, username, password):
     try:
         # Create an SSH client
         client = paramiko.SSHClient()
+
+        # Automatically add the server's host key (this is insecure, see comments below)
         client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+
+        # Connect to the remote server
         client.connect(hostname, port, username, password)
 
-        # Execute commands to fetch metrics
-        commands = [
-            "top -b -n 1",        # CPU and memory
-            "df -h",              # Disk space
-            "netstat -i",         # Network interfaces
-        ]
+        print("Connected to the server!")
 
-        for command in commands:
-            stdin, stdout, stderr = client.exec_command(command)
-            print(f"Output of '{command}':")
-            print(stdout.read().decode())
+        # Here, you can perform actions on the server or retrieve information
+
+        # Fetch system information
+        cpu_percentage = psutil.cpu_percent()
+        memory_info = psutil.virtual_memory()
+        io_counters = psutil.disk_io_counters()
+
+        # Fetch network information
+        hostname = socket.gethostname()
+        open_ports = [x[1] for x in socket.getaddrinfo(hostname, None)]
+
+        # Print or use the fetched information as needed
+        print("CPU Percentage:", cpu_percentage)
+        print("Memory Info:", memory_info)
+        print("IO Counters:", io_counters)
+        print("Hostname:", hostname)
+        print("Open Ports:", open_ports)
 
     except Exception as e:
         print(f"Error: {e}")
@@ -25,10 +40,11 @@ def fetch_metrics(hostname, port, username, password):
         # Close the SSH connection when done
         client.close()
 
-# Replace these with your actual server details
-hostname = 'your_server_ip'
-port = 22  # Default SSH port
-username = 'your_username'
-password = 'your_password'
 
-fetch_metrics(hostname, port, username, password)
+# Replace these with your actual server details
+hostname = "6ef5dd0f56d0.ca3bcf03.alx-cod.online"
+port = 22  # Default SSH port
+username = "6ef5dd0f56d0"
+password = "9428affc18a667f0b64c"
+
+connect_to_server(hostname, port, username, password)
