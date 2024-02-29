@@ -4,7 +4,7 @@
 /argos-env
 
 # ignore .env file
-./server_flask/.env
+server_flask/.env
 # dependencies
 /node_modules
 /.pnp
