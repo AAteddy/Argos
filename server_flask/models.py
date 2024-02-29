@@ -1,5 +1,6 @@
 from exts import db
 
+# Server model
 
 """
 class Server:
@@ -36,3 +37,24 @@ class Server(db.Model):
         self.port = port
 
         db.session.commit()
+
+
+# User model
+
+"""
+class User: 
+    id: integer primary_key
+    username: string
+    email: string
+    password: string
+"""
+
+
+class User(db.Model):
+    id = db.Column(db.Integer(), primary_key=True)
+    username = db.Column(db.String(), nullable=False)
+    email = db.Column(db.String(), nullable=False, unique=True)
+    password = db.Column(db.Text(), nullable=False)
+
+    def __repr__(self):
+        return f"<User {self.username} >"
