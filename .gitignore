@@ -3,6 +3,8 @@
 # ignoring python venv
 /argos-env
 
+# ignore .env file
+./server_flask/.env
 # dependencies
 /node_modules
 /.pnp
