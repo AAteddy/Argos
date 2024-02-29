@@ -60,6 +60,42 @@ class ServersResource(Resource):
         return new_server, 201
 
 
+@api.route("/server/<int:id>")
+class ServerResource(Resource):
+
+    @api.marshal_with(server_model)
+    def get(self, id):
+        """Get a specific server by its ID"""
+        server = Server.query.get_or_404(id)
+
+        return server
+
+    @api.marshal_with(server_model)
+    def put(self, id):
+        """Update a specific server by its ID"""
+        server_to_update = Server.query.get_or_404(id)
+
+        data = request.get_json()
+
+        server_to_update.update(
+            data.get("hostname"),
+            data.get("server_username"),
+            data.get("server_password"),
+            data.get("port"),
+        )
+
+        return server_to_update
+
+    @api.marshal_with(server_model)
+    def delete(self, id):
+        """Delete a specific server by its ID"""
+        server_to_delete = Server.query.get_or_404(id)
+
+        server_to_delete.delete()
+
+        return server_to_delete
+
+
 @app.shell_context_processor
 def make_shell_context():
     return {"db": db, "Server": Server}

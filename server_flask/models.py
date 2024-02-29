@@ -34,3 +34,5 @@ class Server(db.Model):
         self.server_username = server_username
         self.server_password = server_password
         self.port = port
+
+        db.session.commit()
