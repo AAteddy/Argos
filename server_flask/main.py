@@ -5,7 +5,12 @@ from models import Server, User
 from exts import db
 from flask_migrate import Migrate
 from werkzeug.security import generate_password_hash, check_password_hash
-from flask_jwt_extended import JWTManager, create_access_token, create_refresh_token
+from flask_jwt_extended import (
+    JWTManager,
+    create_access_token,
+    create_refresh_token,
+    jwt_required,
+)
 
 app = Flask(__name__)
 app.config.from_object(DevConfig)
@@ -109,6 +114,7 @@ class ServersResource(Resource):
         return servers
 
     @api.marshal_with(server_model)
+    @jwt_required()
     def post(self):
         """Create a new remote server"""
 
@@ -130,6 +136,7 @@ class ServersResource(Resource):
 class ServerResource(Resource):
 
     @api.marshal_with(server_model)
+    @jwt_required()
     def get(self, id):
         """Get a specific server by its ID"""
         server = Server.query.get_or_404(id)
@@ -137,6 +144,7 @@ class ServerResource(Resource):
         return server
 
     @api.marshal_with(server_model)
+    @jwt_required()
     def put(self, id):
         """Update a specific server by its ID"""
         server_to_update = Server.query.get_or_404(id)
@@ -153,6 +161,7 @@ class ServerResource(Resource):
         return server_to_update
 
     @api.marshal_with(server_model)
+    @jwt_required()
     def delete(self, id):
         """Delete a specific server by its ID"""
         server_to_delete = Server.query.get_or_404(id)
