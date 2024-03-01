@@ -1,9 +1,10 @@
-from flask import Flask, request
+from flask import Flask, request, jsonify
 from flask_restx import Api, Resource, fields
 from config import DevConfig
-from models import Server
+from models import Server, User
 from exts import db
 from flask_migrate import Migrate
+from werkzeug.security import generate_password_hash, check_password_hash
 
 app = Flask(__name__)
 app.config.from_object(DevConfig)
@@ -27,11 +28,44 @@ server_model = api.model(
     },
 )
 
+# user signup model schema (serializer)
+signup_model = api.model(
+    "SignUp",
+    {
+        "username": fields.String(),
+        "email": fields.String(),
+        "password": fields.String(),
+    },
+)
+
 
 @api.route("/hello")
 class HelloWorld(Resource):
     def get(self):
         return {"message": "Hello World"}
+
+
+@api.route("/signup")
+class SignUp(Resource):
+    @api.expect(signup_model)
+    def post(self):
+        """Create a new user"""
+        data = request.get_json()
+
+        email = data.get("email")
+        db_user = User.query.filter_by(email=email).first()
+        if db_user is not None:
+            return jsonify({"message": f"User with email {email} already exists."})
+
+        new_user = User(
+            username=data.get("username"),
+            email=data.get("email"),
+            password=generate_password_hash(data.get("password")),
+        )
+
+        new_user.save()
+
+        return jsonify({"message": f"User created successfully"})
 
 
 @api.route("/servers")
