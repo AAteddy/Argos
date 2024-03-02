@@ -1,12 +1,10 @@
-from flask import Flask, request, jsonify
-from flask_restx import Api, Namespace, Resource, fields
+from flask import request, jsonify
+from flask_restx import Namespace, Resource, fields
 from models import User
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_jwt_extended import (
-    JWTManager,
     create_access_token,
     create_refresh_token,
-    jwt_required,
 )
 
 
