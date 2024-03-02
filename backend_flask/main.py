@@ -4,13 +4,7 @@ from config import DevConfig
 from models import Server, User
 from exts import db
 from flask_migrate import Migrate
-from werkzeug.security import generate_password_hash, check_password_hash
-from flask_jwt_extended import (
-    JWTManager,
-    create_access_token,
-    create_refresh_token,
-    jwt_required,
-)
+
 
 app = Flask(__name__)
 app.config.from_object(DevConfig)
@@ -35,71 +29,11 @@ server_model = api.model(
     },
 )
 
-# user signup model schema (serializer)
-signup_model = api.model(
-    "SignUp",
-    {
-        "username": fields.String(),
-        "email": fields.String(),
-        "password": fields.String(),
-    },
-)
-
-# user login model schema (serializer)
-login_model = api.model(
-    "Login",
-    {"email": fields.String(), "password": fields.String()},
-)
-
 
 @api.route("/hello")
 class HelloWorld(Resource):
     def get(self):
         return {"message": "Hello World"}
-
-
-@api.route("/signup")
-class SignUp(Resource):
-
-    @api.expect(signup_model)
-    def post(self):
-        """Create a new user"""
-        data = request.get_json()
-
-        email = data.get("email")
-        db_user = User.query.filter_by(email=email).first()
-        if db_user is not None:
-            return jsonify({"message": f"User with email {email} already exists."})
-
-        new_user = User(
-            username=data.get("username"),
-            email=data.get("email"),
-            password=generate_password_hash(data.get("password")),
-        )
-
-        new_user.save()
-
-        return jsonify({"message": f"User created successfully"})
-
-
-@api.route("/login")
-class Login(Resource):
-
-    @api.expect(login_model)
-    def post(self):
-        """login a user with the given credentials"""
-        data = request.get_json()
-
-        email = data.get("email")
-        password = data.get("password")
-
-        db_user = User.query.filter_by(email=email).first()
-        if db_user and check_password_hash(db_user.password, password):
-            access_token = create_access_token(identity=db_user.email)
-            refresh_token = create_refresh_token(identity=db_user.email)
-            return jsonify(
-                {"access-token": access_token, "refresh_token": refresh_token}
-            )
 
 
 @api.route("/servers")

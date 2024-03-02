@@ -4,7 +4,7 @@
 /argos-env
 
 # Environment
-server_flask/.env
+backend_flask/*.env
 
 # dependencies
 /node_modules
