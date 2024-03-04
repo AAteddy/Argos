@@ -57,6 +57,32 @@ class APITestCase(unittest.TestCase):
 
         self.assertEqual(status_code, 200)
 
+    def test_refresh_token(self):
+        """Test that a valid access token can be refreshed."""
+        signup_response = self.client.post(
+            "/auth/signup",
+            json={
+                "username": "testuser",
+                "email": "testuser@testmail.com",
+                "password": "password",
+            },
+        )
+
+        login_response = self.client.post(
+            "/auth/login",
+            json={"email": "testuser@testmail.com", "password": "password"},
+        )
+
+        refresh_token = login_response.json["refresh_token"]
+
+        refresh_token_response = self.client.post(
+            "/auth/refresh", headers={"Authorization": f"Bearer {refresh_token}"}
+        )
+
+        status_code = refresh_token_response.status_code
+
+        self.assertEqual(status_code, 200)
+
     def test_get_all_servers(self):
         """Test getting all servers from the server list route."""
         response = self.client.get("/server/")
