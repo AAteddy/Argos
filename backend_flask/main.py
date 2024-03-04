@@ -23,7 +23,7 @@ def create_app(config):
     api.add_namespace(server_ns)
     api.add_namespace(auth_ns)
 
-    # doc needed
+    # makes application data objects available in the Python Flask interactive shell.
     @app.shell_context_processor
     def make_shell_context():
         return {"db": db, "Server": Server, "User": User}

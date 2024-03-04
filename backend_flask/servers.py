@@ -24,7 +24,7 @@ class HelloWorld(Resource):
         return {"message": "Hello World"}
 
 
-@server_ns.route("/servers")
+@server_ns.route("/")
 class ServersResource(Resource):
 
     @server_ns.marshal_list_with(server_model)
@@ -54,7 +54,7 @@ class ServersResource(Resource):
         return new_server, 201
 
 
-@server_ns.route("/server/<int:id>")
+@server_ns.route("/<int:id>")
 class ServerResource(Resource):
 
     @server_ns.marshal_with(server_model)
