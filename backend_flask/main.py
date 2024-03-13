@@ -7,28 +7,57 @@ from flask_jwt_extended import JWTManager
 from servers import server_ns
 from auth import auth_ns
 from flask_cors import CORS
+from config import DevConfig
 
 
-def create_app(config):
+# def create_app(config):
 
-    app = Flask(__name__)
-    app.config.from_object(config)
+#     app = Flask(__name__)
+#     # app.config.from_object(config)
+#     app.config.from_object(DevConfig)
 
-    CORS(app)
+#     CORS(app)
 
-    db.init_app(app)
+#     db.init_app(app)
 
-    migrate = Migrate(app, db)
-    JWTManager(app)
+#     migrate = Migrate(app, db)
+#     JWTManager(app)
 
-    api = Api(app, doc="/docs")
+#     api = Api(app, doc="/docs")
 
-    api.add_namespace(server_ns)
-    api.add_namespace(auth_ns)
+#     api.add_namespace(server_ns)
+#     api.add_namespace(auth_ns)
 
-    # makes application data objects available in the Python Flask interactive shell.
-    @app.shell_context_processor
-    def make_shell_context():
-        return {"db": db, "Server": Server, "User": User}
+#     # makes application data objects available in the Python Flask interactive shell.
+#     @app.shell_context_processor
+#     def make_shell_context():
+#         return {"db": db, "Server": Server, "User": User}
 
-    return app
+#     return app
+
+app = Flask(__name__)
+
+app.config.from_object(DevConfig)
+
+CORS(app)
+
+db.init_app(app)
+
+migrate = Migrate(app, db, render_as_batch=True)
+JWTManager(app)
+
+api = Api(app, doc="/docs")
+
+api.add_namespace(server_ns)
+api.add_namespace(auth_ns)
+
+
+# makes application data objects available in the Python Flask interactive shell.
+@app.shell_context_processor
+def make_shell_context():
+    return {"db": db, "Server": Server, "User": User}
+
+
+if __name__ == "__main__":
+
+    app.run()

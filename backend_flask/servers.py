@@ -2,6 +2,7 @@ from flask import request, jsonify
 from flask_restx import Namespace, Resource, fields
 from models import Server
 from flask_jwt_extended import jwt_required
+from argos import connect_to_server
 
 server_ns = Namespace("server", description="Server related operations")
 
@@ -14,6 +15,11 @@ server_model = server_ns.model(
         "server_username": fields.String(),
         "server_password": fields.String(),
         "port": fields.String(),
+        "title": fields.String(),
+        "cpu_info": fields.Float(),
+        "memory_info": fields.Float(),
+        "disk_info": fields.Float(),
+        "user_id": fields.Integer(),
     },
 )
 
@@ -28,10 +34,13 @@ class HelloWorld(Resource):
 class ServersResource(Resource):
 
     @server_ns.marshal_list_with(server_model)
+    @jwt_required()
     def get(self):
         """Get all remote servers"""
 
-        servers = Server.query.all()
+        servers = Server.query(
+            Server.title, Server.cpu_info, Server.memory_info, Server.disk_info
+        )
 
         return servers
 
@@ -42,11 +51,24 @@ class ServersResource(Resource):
 
         data = request.get_json()
 
+        # retrieve remote server metrics
+
+        server_metrics = connect_to_server(
+            data.get("hostname"),
+            data.get("port"),
+            data.get("server_username"),
+            data.get("server_password"),
+        )
+
         new_server = Server(
+            title=data.get("title"),
             hostname=data.get("hostname"),
             server_username=data.get("server_username"),
             server_password=data.get("server_password"),
             port=data.get("port"),
+            cpu_info=server_metrics["cpu_info"],
+            memory_info=server_metrics["memory_info"],
+            disk_info=server_metrics["disk_info"],
         )
 
         new_server.save()
@@ -74,6 +96,7 @@ class ServerResource(Resource):
         data = request.get_json()
 
         server_to_update.update(
+            data.get("title"),
             data.get("hostname"),
             data.get("server_username"),
             data.get("server_password"),
