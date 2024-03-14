@@ -20,7 +20,7 @@ class User(db.Model):
     servers = db.relationship("Server", backref="admin", lazy=True)
 
     def __repr__(self):
-        return f"<User {self.username} >"
+        return f"User('{self.username}', '{self.email}')"
 
     def save(self):
         db.session.add(self)
@@ -49,7 +49,7 @@ class Server(db.Model):
     cpu_info = db.Column(db.Float())
     memory_info = db.Column(db.Float())
     disk_info = db.Column(db.Float())
-    user_id = db.Column(db.Integer(), db.ForeignKey("user.id"), nullable=False)
+    user_email = db.Column(db.String(), db.ForeignKey("user.email"), nullable=False)
 
     def __repr__(self):
         return f"<Server {self.title}>"

@@ -1,7 +1,8 @@
 from flask import request, jsonify
 from flask_restx import Namespace, Resource, fields
 from models import Server
-from flask_jwt_extended import jwt_required
+from models import User
+from flask_jwt_extended import jwt_required, get_jwt_identity
 from argos import connect_to_server
 
 server_ns = Namespace("server", description="Server related operations")
@@ -11,15 +12,15 @@ server_model = server_ns.model(
     "Server",
     {
         "id": fields.Integer(),
+        "title": fields.String(),
         "hostname": fields.String(),
         "server_username": fields.String(),
         "server_password": fields.String(),
         "port": fields.String(),
-        "title": fields.String(),
         "cpu_info": fields.Float(),
         "memory_info": fields.Float(),
         "disk_info": fields.Float(),
-        "user_id": fields.Integer(),
+        "user_email": fields.String(),
     },
 )
 
@@ -38,9 +39,16 @@ class ServersResource(Resource):
     def get(self):
         """Get all remote servers"""
 
-        servers = Server.query(
-            Server.title, Server.cpu_info, Server.memory_info, Server.disk_info
-        )
+        current_email = get_jwt_identity()
+        servers = Server.query.filter_by(user_email=current_email).all()
+
+        # servers = Server.query(
+        #     Server.title,
+        #     Server.user_id,
+        #     Server.cpu_info,
+        #     Server.memory_info,
+        #     Server.disk_info,
+        # )
 
         return servers
 
@@ -60,8 +68,11 @@ class ServersResource(Resource):
             data.get("server_password"),
         )
 
+        # user_email = get_jwt_identity()
+
         new_server = Server(
             title=data.get("title"),
+            user_email=get_jwt_identity(),
             hostname=data.get("hostname"),
             server_username=data.get("server_username"),
             server_password=data.get("server_password"),
