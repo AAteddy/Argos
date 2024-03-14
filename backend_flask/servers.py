@@ -1,7 +1,6 @@
 from flask import request, jsonify
 from flask_restx import Namespace, Resource, fields
 from models import Server
-from models import User
 from flask_jwt_extended import jwt_required, get_jwt_identity
 from argos import connect_to_server
 
@@ -42,14 +41,6 @@ class ServersResource(Resource):
         current_email = get_jwt_identity()
         servers = Server.query.filter_by(user_email=current_email).all()
 
-        # servers = Server.query(
-        #     Server.title,
-        #     Server.user_id,
-        #     Server.cpu_info,
-        #     Server.memory_info,
-        #     Server.disk_info,
-        # )
-
         return servers
 
     @server_ns.marshal_with(server_model)
@@ -67,8 +58,6 @@ class ServersResource(Resource):
             data.get("server_username"),
             data.get("server_password"),
         )
-
-        # user_email = get_jwt_identity()
 
         new_server = Server(
             title=data.get("title"),
