@@ -3,6 +3,7 @@ from main import create_app
 from config import TestConfig
 from exts import db
 from flask_jwt_extended import get_jwt_identity
+from flask import Flask
 
 
 class APITestCase(unittest.TestCase):
@@ -140,45 +141,44 @@ class APITestCase(unittest.TestCase):
 
         self.assertEqual(status_code, 201)
 
-    # def test_get_all_servers_of_user(self):
-    #     """Test for getting all the servers created by the user"""
-    #     signup_response = self.client.post(
-    #         "/auth/signup",
-    #         json={
-    #             "username": "testuser",
-    #             "email": "testuser@testmail.com",
-    #             "password": "password",
-    #         },
-    #     )
+    def test_get_all_servers_of_user(self):
+        """Test for getting all the servers created by the user"""
+        signup_response = self.client.post(
+            "/auth/signup",
+            json={
+                "username": "testuser",
+                "email": "testuser@testmail.com",
+                "password": "password",
+            },
+        )
 
-    #     login_response = self.client.post(
-    #         "/auth/login",
-    #         json={"email": "testuser@testmail.com", "password": "password"},
-    #     )
+        login_response = self.client.post(
+            "/auth/login",
+            json={"email": "testuser@testmail.com", "password": "password"},
+        )
 
-    #     access_token = login_response.json["access_token"]
+        access_token = login_response.json["access_token"]
 
-    #     create_server_response = self.client.post(
-    #         "/server/",
-    #         json={
-    #             "title": "Apache-Test-Server",
-    #             "hostname": "test-server",
-    #             "server_username": "test@server",
-    #             "server_password": "test123",
-    #             "port": "22",
-    #         },
-    #         headers={"Authorization": f"Bearer {access_token}"},
-    #     )
+        create_server_response = self.client.post(
+            "/server/",
+            json={
+                "title": "Test-Server-1",
+                "hostname": "62468bd2f6a3.e336d92f.alx-cod.online",
+                "server_username": "62468bd2f6a3",
+                "server_password": "3bca7fb8e251461e68e2",
+                "port": "22",
+            },
+            headers={"Authorization": f"Bearer {access_token}"},
+        )
 
-    #     if get_jwt_identity() == "testuser@testmail.com":
-    #         get_server_response = self.client.get(
-    #             f"/server",
-    #             headers={"Authorization": f"Bearer {access_token}"},
-    #         )
+        get_server_response = self.client.get(
+            "/server/",
+            headers={"Authorization": f"Bearer {access_token}"},
+        )
 
-    #         status_code = get_server_response.status_code
+        status_code = get_server_response.status_code
 
-    #         self.assertEqual(status_code, 200)
+        self.assertEqual(status_code, 200)
 
     # def test_get_a_server(self):
     #     """Test getting a specific server by its ID"""
