@@ -85,7 +85,9 @@ class APITestCase(unittest.TestCase):
         self.assertEqual(status_code, 200)
 
     def test_get_all_servers(self):
-        """Test getting all servers from the server list route."""
+        """Test getting all servers from the server list route.
+        Failing test - with out logged on user credentials.
+        """
 
         response = self.client.get("/server/")
 
@@ -94,7 +96,9 @@ class APITestCase(unittest.TestCase):
         self.assertEqual(status_code, 401)
 
     def test_get_one_server(self):
-        """Test getting a server from the server detail route."""
+        """Test getting a server from the server detail route.
+        a failing test - with out logged on credentials.
+        """
         id = 1
         response = self.client.get(f"/server/{id}")
 
