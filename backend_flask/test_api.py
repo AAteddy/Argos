@@ -2,8 +2,6 @@ import unittest
 from main import create_app
 from config import TestConfig
 from exts import db
-from flask_jwt_extended import get_jwt_identity
-from flask import Flask
 
 
 class APITestCase(unittest.TestCase):
