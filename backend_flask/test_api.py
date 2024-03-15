@@ -2,6 +2,7 @@ import unittest
 from main import create_app
 from config import TestConfig
 from exts import db
+from flask_jwt_extended import get_jwt_identity
 
 
 class APITestCase(unittest.TestCase):
@@ -85,11 +86,12 @@ class APITestCase(unittest.TestCase):
 
     def test_get_all_servers(self):
         """Test getting all servers from the server list route."""
+
         response = self.client.get("/server/")
 
         status_code = response.status_code
 
-        self.assertEqual(status_code, 200)
+        self.assertEqual(status_code, 401)
 
     def test_get_one_server(self):
         """Test getting a server from the server detail route."""
@@ -134,6 +136,46 @@ class APITestCase(unittest.TestCase):
         # print(create_server_response.json)
         self.assertEqual(status_code, 201)
 
+    def test_get_all_servers_of_user(self):
+        """Test for getting all the servers created by the user"""
+        signup_response = self.client.post(
+            "/auth/signup",
+            json={
+                "username": "testuser",
+                "email": "testuser@testmail.com",
+                "password": "password",
+            },
+        )
+
+        login_response = self.client.post(
+            "/auth/login",
+            json={"email": "testuser@testmail.com", "password": "password"},
+        )
+
+        access_token = login_response.json["access_token"]
+
+        create_server_response = self.client.post(
+            "/server/",
+            json={
+                "title": "Apache-Test-Server",
+                "hostname": "test-server",
+                "server_username": "test@server",
+                "server_password": "test123",
+                "port": "22",
+            },
+            headers={"Authorization": f"Bearer {access_token}"},
+        )
+
+        if get_jwt_identity() == "testuser@testmail.com":
+            get_server_response = self.client.get(
+                f"/server",
+                headers={"Authorization": f"Bearer {access_token}"},
+            )
+
+            status_code = get_server_response.status_code
+
+            self.assertEqual(status_code, 200)
+
     def test_get_a_server(self):
         """Test getting a specific server by its ID"""
         id = 1
@@ -157,6 +199,7 @@ class APITestCase(unittest.TestCase):
         create_server_response = self.client.post(
             "/server/",
             json={
+                "title": "Apache-Test-Server",
                 "hostname": "test-server",
                 "server_username": "test@server",
                 "server_password": "test123",
