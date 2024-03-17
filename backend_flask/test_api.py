@@ -5,6 +5,8 @@ from exts import db
 
 
 class APITestCase(unittest.TestCase):
+    """Unittest for the API endpoints"""
+
     def setUp(self):
         self.app = create_app(TestConfig)
         self.client = self.app.test_client(self)
