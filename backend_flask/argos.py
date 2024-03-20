@@ -14,7 +14,7 @@ def connect_to_server(hostname, port, username, password):
         # Connect to the remote server
         client.connect(hostname, port, username, password)
 
-        print("Connected to the server!")
+        # print("Connected to the server!")
 
         # Here, you can perform actions on the server or retrieve information
 
