@@ -5,7 +5,7 @@ import Button from "@mui/material/Button";
 import Container from "@mui/material/Container";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
-
+import { Link } from "react-router-dom";
 import herolight from "./herolight.png";
 import herodark from "./herodark.png";
 
@@ -74,9 +74,7 @@ export default function HeroSection() {
             useFlexGap
             sx={{ pt: 2, width: { xs: "100%", sm: "auto" } }}
           >
-            <Button variant="contained" color="primary">
-              Get started now
-            </Button>
+            <Button variant="contained" color="primary"></Button>
           </Stack>
         </Stack>
         <Box
