@@ -6,6 +6,9 @@ import Container from "@mui/material/Container";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 
+import herolight from "./herolight.png";
+import herodark from "./herodark.png";
+
 export default function HeroSection() {
   return (
     <Box
@@ -85,8 +88,8 @@ export default function HeroSection() {
             width: "100%",
             backgroundImage:
               theme.palette.mode === "light"
-                ? 'url("/static/images/hero-light.png")'
-                : 'url("/static/images/hero-dark.png")',
+                ? `url(${herolight})`
+                : `url(${herodark})`,
             backgroundSize: "cover",
             borderRadius: "10px",
             outline: "1px solid",

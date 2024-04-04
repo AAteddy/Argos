@@ -14,6 +14,8 @@ import MenuIcon from "@mui/icons-material/Menu";
 import ToggleColorMode from "./ToggleColorMode";
 import { PaletteMode } from "@mui/material";
 
+import argoslogo from "./argoslogo.png";
+
 import { Link } from "react-router-dom";
 
 const logoStyle = {
@@ -91,13 +93,7 @@ function Navbar({ mode, toggleColorMode }: NavbarProps) {
                 px: 0,
               }}
             >
-              <img
-                src={
-                  "https://assets-global.website-files.com/61ed56ae9da9fd7e0ef0a967/61f12e6faf73568658154dae_SitemarkDefault.svg"
-                }
-                style={logoStyle}
-                alt="logo of sitemark"
-              />
+              <img src={argoslogo} style={logoStyle} alt="logo of argos" />
               <Box sx={{ display: { xs: "none", md: "flex" } }}>
                 <MenuItem
                   onClick={() => scrollToSection("features")}
