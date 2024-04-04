@@ -64,7 +64,7 @@ export default function Footer() {
               Service
             </Typography>
             <Typography variant="body2" color="text.secondary" mb={2}>
-              Argos is a remote-server metrics product service.
+              Argos is a remote-server metrics service provider product.
             </Typography>
           </Box>
         </Box>
@@ -79,7 +79,7 @@ export default function Footer() {
         >
           <IconButton
             color="inherit"
-            href="https://github.com/mui"
+            href="https://github.com/AAteddy"
             aria-label="GitHub"
             sx={{ alignSelf: "center" }}
           >
@@ -87,7 +87,7 @@ export default function Footer() {
           </IconButton>
           <IconButton
             color="inherit"
-            href="https://twitter.com/MaterialUI"
+            href="https://twitter.com/teddyaalem"
             aria-label="X"
             sx={{ alignSelf: "center" }}
           >
@@ -95,7 +95,7 @@ export default function Footer() {
           </IconButton>
           <IconButton
             color="inherit"
-            href="https://www.linkedin.com/company/mui/"
+            href="https://www.linkedin.com/in/tedrosalemasfaha"
             aria-label="LinkedIn"
             sx={{ alignSelf: "center" }}
           >
