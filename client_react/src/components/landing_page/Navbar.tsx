@@ -129,7 +129,12 @@ function Navbar({ mode, toggleColorMode }: NavbarProps) {
                 href="/material-ui/getting-started/templates/sign-in/"
                 target="_blank"
               >
-                Sign in
+                <Link
+                  to={"/login"}
+                  style={{ color: "blue", textDecoration: "none" }}
+                >
+                  Sign in
+                </Link>
               </Button>
               <Button
                 color="primary"
@@ -139,7 +144,12 @@ function Navbar({ mode, toggleColorMode }: NavbarProps) {
                 href="/material-ui/getting-started/templates/sign-up/"
                 target="_blank"
               >
-                Sign up
+                <Link
+                  to={"/signup"}
+                  style={{ color: "white", textDecoration: "none" }}
+                >
+                  Sign up
+                </Link>
               </Button>
             </Box>
             <Box sx={{ display: { sm: "", md: "none" } }}>

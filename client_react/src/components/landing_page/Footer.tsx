@@ -11,6 +11,7 @@ import Typography from "@mui/material/Typography";
 import FacebookIcon from "@mui/icons-material/GitHub";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import TwitterIcon from "@mui/icons-material/X";
+import argoslogo from "./argoslogo.png";
 
 const logoStyle = {
   width: "140px",
@@ -57,13 +58,7 @@ export default function Footer() {
         >
           <Box sx={{ width: { xs: "100%", sm: "60%" } }}>
             <Box sx={{ ml: "-15px" }}>
-              <img
-                src={
-                  "https://assets-global.website-files.com/61ed56ae9da9fd7e0ef0a967/61f12e6faf73568658154dae_SitemarkDefault.svg"
-                }
-                style={logoStyle}
-                alt="logo of sitemark"
-              />
+              <img src={argoslogo} style={logoStyle} alt="logo of sitemark" />
             </Box>
             <Typography variant="body2" fontWeight={600} gutterBottom>
               Service
