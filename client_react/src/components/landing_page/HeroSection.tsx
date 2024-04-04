@@ -74,7 +74,14 @@ export default function HeroSection() {
             useFlexGap
             sx={{ pt: 2, width: { xs: "100%", sm: "auto" } }}
           >
-            <Button variant="contained" color="primary"></Button>
+            <Button variant="contained" color="primary">
+              <Link
+                to={"/login"}
+                style={{ color: "white", textDecoration: "none" }}
+              >
+                Get started now
+              </Link>
+            </Button>
           </Stack>
         </Stack>
         <Box
