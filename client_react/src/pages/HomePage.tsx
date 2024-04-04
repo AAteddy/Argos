@@ -75,6 +75,7 @@ export default function HomePage() {
       <Navbar mode={mode} toggleColorMode={toggleColorMode} />
       <HeroSection />
       <Box sx={{ bgcolor: "background.default" }}>
+        <Divider />
         <Footer />
       </Box>
       <ToggleCustomTheme
