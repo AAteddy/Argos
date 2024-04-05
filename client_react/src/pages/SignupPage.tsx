@@ -10,6 +10,7 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 
 type FormValues = {
   username: string;
@@ -45,6 +46,8 @@ const SignupPage = () => {
     formState: { errors },
   } = form;
 
+  const navigate = useNavigate();
+
   const submitForm = (data: FormValues) => {
     if (data.password === data.confirmPassword) {
       const body = {
@@ -64,6 +67,7 @@ const SignupPage = () => {
         .then((data) => console.log(data))
         .catch((error) => console.log(error));
 
+      navigate("/login");
       reset();
     } else {
       alert("Passwords do not match");
