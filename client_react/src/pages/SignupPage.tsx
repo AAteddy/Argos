@@ -9,16 +9,65 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { Link } from "react-router-dom";
+import { useForm } from "react-hook-form";
+
+type FormValues = {
+  username: string;
+  email: string;
+  password: string;
+  confirmPassword: string;
+};
 
 const SignupPage = () => {
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      username: data.get("name"),
-      email: data.get("email"),
-      password: data.get("password"),
-    });
+  // const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  //   event.preventDefault();
+  //   const data = new FormData(event.currentTarget);
+  //   console.log({
+  //     username: data.get("name"),
+  //     email: data.get("email"),
+  //     password: data.get("password"),
+  //   });
+  // };
+
+  const form = useForm<FormValues>({
+    defaultValues: {
+      username: "",
+      email: "",
+      password: "",
+      confirmPassword: "",
+    },
+  });
+
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = form;
+
+  const submitForm = (data: FormValues) => {
+    if (data.password === data.confirmPassword) {
+      const body = {
+        username: data.username,
+        email: data.email,
+        password: data.password,
+      };
+
+      const requestOptions = {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body),
+      };
+
+      fetch("http://127.0.0.1:5000/auth/signup", requestOptions)
+        .then((response) => response.json())
+        .then((data) => console.log(data))
+        .catch((error) => console.log(error));
+
+      reset();
+    } else {
+      alert("Passwords do not match");
+    }
   };
 
   return (
@@ -38,50 +87,96 @@ const SignupPage = () => {
         <Typography component="h1" variant="h5">
           Sign up
         </Typography>
-        <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
+        <Box
+          component="form"
+          noValidate
+          onSubmit={handleSubmit(submitForm)}
+          sx={{ mt: 3 }}
+        >
           <Grid container spacing={2}>
             <Grid item xs={12}>
               <TextField
-                autoComplete="name"
-                name="name"
-                required
+                autoComplete="username"
                 fullWidth
-                id="name"
-                label="Name"
+                id="username"
+                label="Username"
                 autoFocus
+                {...register("username", {
+                  required: {
+                    value: true,
+                    message: "Username is required",
+                  },
+                  maxLength: {
+                    value: 20,
+                    message: "characters over limit",
+                  },
+                })}
+                error={!!errors.username}
+                helperText={errors.username?.message}
               />
             </Grid>
             <Grid item xs={12}>
               <TextField
-                required
                 fullWidth
                 id="email"
                 label="Email Address"
-                name="email"
                 type="email"
                 autoComplete="email"
+                {...register("email", {
+                  required: {
+                    value: true,
+                    message: "Email is required",
+                  },
+                  maxLength: {
+                    value: 25,
+                    message: "Characters over limit",
+                  },
+                  pattern: {
+                    value:
+                      /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/,
+                    message: "Please enter a valid email address",
+                  },
+                })}
+                error={!!errors.email}
+                helperText={errors.email?.message}
               />
             </Grid>
             <Grid item xs={12}>
               <TextField
                 required
                 fullWidth
-                name="password"
                 label="Password"
                 type="password"
                 id="password"
                 autoComplete="new-password"
+                {...register("password", {
+                  required: "Password is required",
+                  minLength: {
+                    value: 4,
+                    message: "Must be at least 4 characters long",
+                  },
+                })}
+                error={!!errors.password}
+                helperText={errors.password?.message}
               />
             </Grid>
             <Grid item xs={12}>
               <TextField
                 required
                 fullWidth
-                name="confirmPassword"
                 label="Confirm Password"
                 type="password"
-                id="password"
+                id="confirmPassword"
                 autoComplete="new-password"
+                {...register("confirmPassword", {
+                  required: "Please confirm your password",
+                  minLength: {
+                    value: 4,
+                    message: "Must be at least 4 characters long",
+                  },
+                })}
+                error={!!errors.confirmPassword}
+                helperText={errors.confirmPassword?.message}
               />
             </Grid>
           </Grid>
