@@ -15,6 +15,7 @@ const SignupPage = () => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     console.log({
+      username: data.get("name"),
       email: data.get("email"),
       password: data.get("password"),
     });
@@ -50,16 +51,6 @@ const SignupPage = () => {
                 autoFocus
               />
             </Grid>
-            {/* <Grid item xs={12} sm={6}>
-              <TextField
-                required
-                fullWidth
-                id="lastName"
-                label="Last Name"
-                name="lastName"
-                autoComplete="family-name"
-              />
-            </Grid> */}
             <Grid item xs={12}>
               <TextField
                 required
@@ -67,6 +58,7 @@ const SignupPage = () => {
                 id="email"
                 label="Email Address"
                 name="email"
+                type="email"
                 autoComplete="email"
               />
             </Grid>
@@ -81,12 +73,17 @@ const SignupPage = () => {
                 autoComplete="new-password"
               />
             </Grid>
-            {/* <Grid item xs={12}>
-              <FormControlLabel
-                control={<Checkbox value="allowExtraEmails" color="primary" />}
-                label="I want to receive inspiration, marketing promotions and updates via email."
+            <Grid item xs={12}>
+              <TextField
+                required
+                fullWidth
+                name="confirmPassword"
+                label="Confirm Password"
+                type="password"
+                id="password"
+                autoComplete="new-password"
               />
-            </Grid> */}
+            </Grid>
           </Grid>
           <Button
             type="submit"
