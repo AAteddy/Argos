@@ -13,6 +13,7 @@ import Container from "@mui/material/Container";
 import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
+import { login } from "../auth";
 
 type FormValues = {
   email: string;
@@ -58,10 +59,14 @@ const LoginPage = () => {
 
     fetch("http://127.0.0.1:5000/auth/login", requestOptions)
       .then((response) => response.json())
-      .then((data) => console.log(data))
+      .then((data) => {
+        console.log(data.access_token);
+        login(data.access_token);
+
+        navigate("/dashboard");
+      })
       .catch((error) => console.log(error));
 
-    navigate("/dashboard");
     reset();
   };
 
