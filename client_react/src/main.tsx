@@ -10,6 +10,7 @@ import HomePage from "./pages/HomePage";
 import LoginPage from "./pages/LoginPage";
 import SignupPage from "./pages/SignupPage";
 import DashboardPage from "./components/dashboard/DashboardPage";
+import AddItemForm from "./components/dashboard/AddItemForm";
 
 const router = createBrowserRouter([
   {
@@ -28,6 +29,10 @@ const router = createBrowserRouter([
   {
     path: "/dashboard",
     element: <DashboardPage />,
+  },
+  {
+    path: "/server",
+    element: <AddItemForm />,
   },
 ]);
 

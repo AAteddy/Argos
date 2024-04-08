@@ -60,7 +60,7 @@ const AddItemForm = () => {
       .then((data) => console.log(data))
       .catch((error) => console.log(error));
 
-    navigate("/login");
+    navigate("/Dashboard");
     reset();
   };
 
@@ -180,7 +180,7 @@ const AddItemForm = () => {
           </Button>
           <Grid container justifyContent="flex-end">
             <Grid item>
-              <Link to={"/dashboard"}>Return back to dashboard</Link>
+              <Link to={"/Dashboard"}>Return back to dashboard</Link>
             </Grid>
           </Grid>
         </Box>
