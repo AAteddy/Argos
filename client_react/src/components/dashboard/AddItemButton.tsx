@@ -7,8 +7,7 @@ import { Link } from "react-router-dom";
 const AddItemButton = () => {
   return (
     <Button variant="contained" startIcon={<AddCircle />}>
-      <Link to={"/server"}></Link>
-      Add Server
+      <Link to={"/server"}>New Server</Link>
     </Button>
   );
 };
