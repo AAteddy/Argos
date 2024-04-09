@@ -5,6 +5,8 @@ import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import Divider from "@mui/material/Divider";
+import ServerList from "./ServerList";
+import Typography from "@mui/material/Typography";
 
 const ListItems = () => {
   const [server, setServer] = useState([]);
@@ -22,26 +24,19 @@ const ListItems = () => {
   useEffect(() => {
     fetch("http://127.0.0.1:5000/server/", requestOptions)
       .then((response) => response.json())
-      .then((data) => console.log(data))
+      .then((data) => {
+        console.log(data);
+        setServer(data[0].title);
+      })
       .catch((error) => console.log(error));
   }, []);
 
   return (
-    <>
-      <List>
-        <ListItem disablePadding>
-          <ListItemButton>
-            <ListItemText primary="NGINX Server" />
-          </ListItemButton>
-        </ListItem>
-        <Divider />
-        <ListItem disablePadding>
-          <ListItemButton>
-            <ListItemText primary="APACHE Server" />
-          </ListItemButton>
-        </ListItem>
-      </List>
-    </>
+    <div>
+      {server.map((server) => (
+        <Typography>{server}</Typography>
+      ))}
+    </div>
   );
 };
 
