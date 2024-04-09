@@ -20,7 +20,7 @@ type FormValues = {
   port: string;
 };
 
-const AddItemForm = () => {
+const CreateServer = () => {
   const form = useForm<FormValues>({
     defaultValues: {
       title: "",
@@ -49,13 +49,18 @@ const AddItemForm = () => {
       port: data.port,
     };
 
+    const token = JSON.parse(localStorage.getItem("REACT_TOKEN_AUTH_KEY")!);
+
     const requestOptions = {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
       body: JSON.stringify(body),
     };
 
-    fetch("http://127.0.0.1:5000/auth/signup", requestOptions)
+    fetch("http://127.0.0.1:5000/server/", requestOptions)
       .then((response) => response.json())
       .then((data) => console.log(data))
       .catch((error) => console.log(error));
@@ -176,7 +181,7 @@ const AddItemForm = () => {
             variant="contained"
             sx={{ mt: 3, mb: 2 }}
           >
-            Add Server
+            Create Server
           </Button>
           <Grid container justifyContent="flex-end">
             <Grid item>
@@ -189,4 +194,4 @@ const AddItemForm = () => {
   );
 };
 
-export default AddItemForm;
+export default CreateServer;

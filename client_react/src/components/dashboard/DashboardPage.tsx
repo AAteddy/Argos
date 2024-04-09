@@ -22,6 +22,7 @@ import NotificationsIcon from "@mui/icons-material/Notifications";
 import Chart from "./Chart";
 import CardItem from "./CardItem";
 import AddItemButton from "./AddItemButton";
+import ListItems from "./ListItems";
 
 function Copyright(props: any) {
   return (
@@ -155,7 +156,10 @@ const DashboardPage = () => {
           <Box sx={{ p: [2] }}>
             <AddItemButton />
           </Box>
-          <Divider sx={{ my: 1 }} />
+          <Divider sx={{ my: 2 }} />
+          <Box sx={{ p: [2] }}>
+            <ListItems />
+          </Box>
 
           {/* <List component="nav">
             {AddItemButton}

@@ -5,7 +5,7 @@ import HomePage from "./pages/HomePage";
 import LoginPage from "./pages/LoginPage";
 import SignupPage from "./pages/SignupPage";
 import DashboardPage from "./components/dashboard/DashboardPage";
-import AddItemForm from "./components/dashboard/AddItemForm";
+import CreateServer from "./components/dashboard/CreateServerPage";
 
 const router = createBrowserRouter([
   {
@@ -27,7 +27,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/server",
-    element: <AddItemForm />,
+    element: <CreateServer />,
   },
 ]);
 
