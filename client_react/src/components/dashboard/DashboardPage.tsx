@@ -18,11 +18,14 @@ import Link from "@mui/material/Link";
 import MenuIcon from "@mui/icons-material/Menu";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import NotificationsIcon from "@mui/icons-material/Notifications";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 // import { mainListItems, secondaryListItems } from "./sidebarItems";
 import Chart from "./Chart";
 import CardItem from "./CardItem";
 import AddItemButton from "./AddItemButton";
 import ListItems from "./ListItems";
+import { logout } from "../../auth";
+import Button from "@mui/material/Button";
 
 function Copyright(props: any) {
   return (
@@ -123,18 +126,21 @@ const DashboardPage = () => {
             >
               <MenuIcon />
             </IconButton>
-            <Typography
-              component="h1"
-              variant="h6"
-              color="inherit"
-              noWrap
-              sx={{ flexGrow: 1 }}
-            >
-              Dashboard
-            </Typography>
+            <Box sx={{ flexGrow: 1 }}>
+              <Button
+                color="inherit"
+                component="a"
+                href="/"
+                onClick={() => {
+                  logout();
+                }}
+              >
+                Logout
+              </Button>
+            </Box>
             <IconButton color="inherit">
               <Badge badgeContent={4} color="secondary">
-                <NotificationsIcon />
+                <AccountCircleIcon />
               </Badge>
             </IconButton>
           </Toolbar>
