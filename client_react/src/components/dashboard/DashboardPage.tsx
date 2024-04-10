@@ -31,6 +31,8 @@ import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
 
+import Title from "./Title";
+
 interface Server {
   id: number;
   title: string;
@@ -199,15 +201,15 @@ const DashboardPage = () => {
           </Box>
           <Divider sx={{ my: 2 }} />
           <Box sx={{ p: [2] }}>
-            <List>
-              <ListItem disablePadding>
-                <ListItemButton>
-                  {servers.map((server) => (
+            {servers.map((server) => (
+              <List>
+                <ListItem disablePadding>
+                  <ListItemButton>
                     <ListItemText primary={server.title} />
-                  ))}
-                </ListItemButton>
-              </ListItem>
-            </List>
+                  </ListItemButton>
+                </ListItem>
+              </List>
+            ))}
           </Box>
 
           {/* <List component="nav">
@@ -241,7 +243,16 @@ const DashboardPage = () => {
                     height: 240,
                   }}
                 >
-                  <CardItem />
+                  <Title>Memory</Title>
+                  {servers.map((server) => (
+                    <Typography component="p" variant="h4">
+                      {server.memory_info}
+                    </Typography>
+                  ))}
+
+                  <Typography color="text.secondary" sx={{ flex: 1 }}>
+                    on 15 March, 2019
+                  </Typography>
                 </Paper>
               </Grid>
               <Grid item xs={12} md={4} lg={3}>
@@ -253,7 +264,16 @@ const DashboardPage = () => {
                     height: 240,
                   }}
                 >
-                  <CardItem />
+                  <Title>Disk</Title>
+                  {servers.map((server) => (
+                    <Typography component="p" variant="h4">
+                      {server.disk_info}
+                    </Typography>
+                  ))}
+
+                  <Typography color="text.secondary" sx={{ flex: 1 }}>
+                    on 15 March, 2019
+                  </Typography>
                 </Paper>
               </Grid>
               <Grid item xs={12} md={4} lg={3}>
@@ -265,10 +285,15 @@ const DashboardPage = () => {
                     height: 240,
                   }}
                 >
-                  <CardItem />
+                  <Title>CPU</Title>
+                  {servers.map((server) => (
+                    <Typography component="p" variant="h4">
+                      {server.cpu_info}
+                    </Typography>
+                  ))}
                 </Paper>
               </Grid>
-              <Grid item xs={12} md={4} lg={3}>
+              {/* <Grid item xs={12} md={4} lg={3}>
                 <Paper
                   sx={{
                     p: 2,
@@ -279,7 +304,7 @@ const DashboardPage = () => {
                 >
                   <CardItem />
                 </Paper>
-              </Grid>
+              </Grid> */}
               {/* Chart */}
               <Grid item xs={12} md={8} lg={9}>
                 <Paper
