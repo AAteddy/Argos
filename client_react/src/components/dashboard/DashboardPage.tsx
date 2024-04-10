@@ -26,6 +26,18 @@ import AddItemButton from "./AddItemButton";
 import ListItems from "./ListItems";
 import { logout } from "../../auth";
 import Button from "@mui/material/Button";
+import { useEffect, useState } from "react";
+import ListItem from "@mui/material/ListItem";
+import ListItemButton from "@mui/material/ListItemButton";
+import ListItemText from "@mui/material/ListItemText";
+
+interface Server {
+  id: number;
+  title: string;
+  cpu_info: number;
+  memory_info: number;
+  disk_info: number;
+}
 
 function Copyright(props: any) {
   return (
@@ -100,6 +112,29 @@ const defaultTheme = createTheme();
 
 const DashboardPage = () => {
   const [open, setOpen] = React.useState(true);
+
+  const [servers, setServers] = useState<Server[]>([]);
+
+  const token = JSON.parse(localStorage.getItem("REACT_TOKEN_AUTH_KEY")!);
+
+  const requestOptions = {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  };
+
+  useEffect(() => {
+    fetch("http://127.0.0.1:5000/server/", requestOptions)
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+        setServers(data);
+      })
+      .catch((error) => console.log(error));
+  }, []);
+
   const toggleDrawer = () => {
     setOpen(!open);
   };
@@ -164,7 +199,15 @@ const DashboardPage = () => {
           </Box>
           <Divider sx={{ my: 2 }} />
           <Box sx={{ p: [2] }}>
-            <ListItems />
+            <List>
+              <ListItem disablePadding>
+                <ListItemButton>
+                  {servers.map((server) => (
+                    <ListItemText primary={server.title} />
+                  ))}
+                </ListItemButton>
+              </ListItem>
+            </List>
           </Box>
 
           {/* <List component="nav">
