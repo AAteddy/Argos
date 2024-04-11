@@ -312,7 +312,7 @@ const DashboardPage = () => {
                 <Paper sx={{ p: 2, display: "flex", flexDirection: "column" }}>
                   <List>
                     <ListItem disablePadding>
-                      <ListItemText primary="Server Title" />
+                      <ListItemText primary="Server Name" />
 
                       <ListItemText primary="Memory Usage" />
 
