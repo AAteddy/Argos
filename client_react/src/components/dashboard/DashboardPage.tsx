@@ -201,15 +201,18 @@ const DashboardPage = () => {
           </Box>
           <Divider sx={{ my: 2 }} />
           <Box sx={{ p: [2] }}>
-            {servers.map((server) => (
-              <List>
-                <ListItem disablePadding>
-                  <ListItemButton>
-                    <ListItemText primary={server.title} />
-                  </ListItemButton>
-                </ListItem>
-              </List>
-            ))}
+            <List>
+              {servers.map((server) => (
+                <>
+                  <ListItem disablePadding>
+                    <ListItemButton>
+                      <ListItemText primary={server.title} />
+                    </ListItemButton>
+                  </ListItem>
+                  <Divider sx={{ my: 1 }} />
+                </>
+              ))}
+            </List>
           </Box>
 
           {/* <List component="nav">
@@ -234,7 +237,7 @@ const DashboardPage = () => {
           <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
             <Grid container spacing={3}>
               {/* Recent Deposits */}
-              <Grid item xs={12} md={4} lg={3}>
+              {/* <Grid item xs={12} md={4} lg={3}>
                 <Paper
                   sx={{
                     p: 2,
@@ -245,7 +248,7 @@ const DashboardPage = () => {
                 >
                   <Title>Memory</Title>
                   {servers.map((server) => (
-                    <Typography component="p" variant="h4">
+                    <Typography component="p" variant="h4" key={server.id}>
                       {server.memory_info}
                     </Typography>
                   ))}
@@ -292,7 +295,7 @@ const DashboardPage = () => {
                     </Typography>
                   ))}
                 </Paper>
-              </Grid>
+              </Grid> */}
               {/* <Grid item xs={12} md={4} lg={3}>
                 <Paper
                   sx={{
@@ -305,6 +308,38 @@ const DashboardPage = () => {
                   <CardItem />
                 </Paper>
               </Grid> */}
+              <Grid item xs={12}>
+                <Paper sx={{ p: 2, display: "flex", flexDirection: "column" }}>
+                  <List>
+                    <ListItem disablePadding>
+                      <ListItemText primary="Server Title" />
+
+                      <ListItemText primary="Memory Usage" />
+
+                      <ListItemText primary="CPU Usage" />
+
+                      <ListItemText primary="Disk Usage" />
+                    </ListItem>
+                  </List>
+                  <Divider sx={{ my: 3 }} />
+                  <List>
+                    {servers.map((server) => (
+                      <>
+                        <ListItem disablePadding>
+                          <ListItemText primary={server.title} />
+
+                          <ListItemText primary={server.memory_info + `%`} />
+
+                          <ListItemText primary={server.cpu_info + `%`} />
+
+                          <ListItemText primary={server.disk_info + `%`} />
+                        </ListItem>
+                        <Divider sx={{ my: 2 }} />
+                      </>
+                    ))}
+                  </List>
+                </Paper>
+              </Grid>
               {/* Chart */}
               <Grid item xs={12} md={8} lg={9}>
                 <Paper
