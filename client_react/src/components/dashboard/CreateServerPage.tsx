@@ -51,10 +51,20 @@ const CreateServer = () => {
 
     const token = JSON.parse(localStorage.getItem("REACT_TOKEN_AUTH_KEY")!);
 
+    // let headers = new Headers();
+
+    // headers.append('Content-Type', 'application/json');
+    // headers.append('Accept', 'application/json');
+
+    // headers.append('Access-Control-Allow-Origin', 'http://localhost:3000');
+    // headers.append('Access-Control-Allow-Credentials', 'true');
+
     const requestOptions = {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "http://localhost:5173",
+        "Access-Control-Allow-Credentials": "true",
         Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify(body),

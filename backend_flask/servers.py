@@ -3,6 +3,7 @@ from flask_restx import Namespace, Resource, fields
 from models import Server
 from flask_jwt_extended import jwt_required, get_jwt_identity
 from argos import connect_to_server
+from flask_cors import cross_origin
 
 server_ns = Namespace("server", description="Server related operations")
 
@@ -44,6 +45,7 @@ class ServersResource(Resource):
         return servers
 
     @server_ns.marshal_with(server_model)
+    @cross_origin(origins=["http://localhost:5173/server"], methods=["POST"])
     @jwt_required()
     def post(self):
         """Create a new remote server"""
