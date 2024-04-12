@@ -180,6 +180,8 @@ const DashboardPage = () => {
               </Button>
             </Box>
 
+            {profile ? <Typography>{profile.user_email}</Typography> : null}
+
             <IconButton color="inherit">
               <Badge badgeContent={1} color="secondary">
                 <AccountCircleIcon />
