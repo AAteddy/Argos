@@ -39,6 +39,7 @@ interface Server {
   cpu_info: number;
   memory_info: number;
   disk_info: number;
+  user_email: string;
 }
 
 function Copyright(props: any) {
@@ -116,6 +117,7 @@ const DashboardPage = () => {
   const [open, setOpen] = React.useState(true);
 
   const [servers, setServers] = useState<Server[]>([]);
+  const [profile, setProfile] = useState<Server[]>([]);
 
   const token = JSON.parse(localStorage.getItem("REACT_TOKEN_AUTH_KEY")!);
 
@@ -132,7 +134,9 @@ const DashboardPage = () => {
       .then((response) => response.json())
       .then((data) => {
         console.log(data);
+
         setServers(data);
+        setProfile(data[0]); // Assuming user is only on one server for now
       })
       .catch((error) => console.log(error));
   }, []);
@@ -175,8 +179,9 @@ const DashboardPage = () => {
                 Logout
               </Button>
             </Box>
+
             <IconButton color="inherit">
-              <Badge badgeContent={4} color="secondary">
+              <Badge badgeContent={1} color="secondary">
                 <AccountCircleIcon />
               </Badge>
             </IconButton>
