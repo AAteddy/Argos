@@ -125,6 +125,9 @@ const DashboardPage = () => {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
+      "Access-Control-Allow-Origin": "http://localhost:5173/*",
+      "Access-Control-Allow-Credentials": "true",
+      mode: "no-cors",
       Authorization: `Bearer ${token}`,
     },
   };
@@ -180,7 +183,7 @@ const DashboardPage = () => {
               </Button>
             </Box>
 
-            {/* {profile ? <Typography>{profile.user_email}</Typography> : null} */}
+            {profile ? <Typography>{profile.user_email}</Typography> : null}
 
             <IconButton color="inherit">
               <Badge badgeContent={1} color="secondary">

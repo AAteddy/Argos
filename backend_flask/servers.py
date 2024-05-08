@@ -45,7 +45,6 @@ class ServersResource(Resource):
         return servers
 
     @server_ns.marshal_with(server_model)
-    @cross_origin(origins=["http://localhost:5173/server"], methods=["POST"])
     @jwt_required()
     def post(self):
         """Create a new remote server"""
