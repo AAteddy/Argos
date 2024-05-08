@@ -30,4 +30,4 @@ Argos is a web-based platform developed to help track resource metrics of remote
 
 ## Author
 
-Tedros Alem
+<a src='https://www.linkedin.com/in/tedrosalemasfaha'>Tedros Alem</a>
