@@ -4,6 +4,8 @@
 
 Welcome to Argos.
 
+![argos-landing](D:\web-dev-material\Argos\images\argos-landing.png)
+
 ## About Argos
 
 Argos is a web-based platform developed to help track resource metrics of remote servers. It is a personal project, developed to be used by any user.
@@ -28,6 +30,6 @@ Argos is a web-based platform developed to help track resource metrics of remote
 <li>JWT: Libraries for authentication and authorization in Flask applications.</li>
 </ul>
 
-## Author
+## Author - LinkedIn
 
 [Tedros Alem](https://www.linkedin.com/in/tedrosalemasfaha)
