@@ -4,7 +4,7 @@
 
 Welcome to Argos.
 
-![argos-landing](D:\web-dev-material\Argos\images\argos-landing.png)
+![argos-landing]
 
 ## About Argos
 
